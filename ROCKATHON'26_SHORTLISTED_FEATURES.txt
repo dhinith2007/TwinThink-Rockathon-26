@@ -1,0 +1,625 @@
+                              ROCKATHON'26
+
+PS01->AUTONOMOUS COMMERCE ENGINEERING
+
+
+SHORTLISTED 15 FEATURES:
+🔥 FEATURE 1 — Constraint Intelligence Engine
+
+This should be one of our strongest components.
+
+The user doesn't always give structured requirements.
+
+They might say:
+
+"I need 15 decent laptops for our new interns. Nothing too expensive, preferably delivered next week."
+
+Our system converts this into:
+
+Hard constraints
+Quantity = 15
+Delivery ≤ 7 days
+Budget = inferred / clarification required
+Soft constraints
+Good performance
+Prefer reliable seller
+Prefer better warranty
+Ambiguous constraints
+
+"Nothing too expensive"
+
+The system shouldn't blindly interpret that.
+
+It should ask:
+
+"What is your maximum budget per laptop?"
+
+This directly strengthens our handling of vague requirements.
+
+🔥 FEATURE 2 — Hard vs Soft Constraint Reasoning
+
+This is where we can make our decision engine genuinely interesting.
+
+Suppose:
+
+Requirement	Type
+Budget ≤ ₹45,000	HARD
+RAM ≥ 16GB	HARD
+SSD ≥ 512GB	HARD
+Delivery ≤ 7 days	HARD
+Warranty ≥ 2 years	SOFT
+Brand preference	SOFT
+Seller rating	SOFT
+
+The agent first performs:
+
+Stage 1 — Constraint Satisfaction
+
+Remove anything violating hard constraints.
+
+Then:
+
+Stage 2 — Multi-objective Optimization
+
+Rank the surviving options based on soft preferences.
+
+This is much more defensible than:
+
+"LLM thinks Product A is better."
+
+🔥 FEATURE 3 — Procurement Risk Score
+
+This could become our signature feature.
+
+Every vendor/product gets a risk profile.
+
+For example:
+
+Vendor A
+
+Price Risk          → Low
+Delivery Risk       → Low
+Seller Risk         → Low
+Return Risk         → Medium
+Availability Risk   → Low
+
+Overall Risk → 14/100
+
+Another vendor:
+
+Vendor B
+
+Price Risk          → Very Low
+Delivery Risk       → High
+Seller Risk         → High
+Return Risk         → Medium
+Availability Risk   → High
+
+Overall Risk → 67/100
+
+So our agent doesn't simply ask:
+
+"Which product is cheapest?"
+
+It asks:
+
+"Which purchase has the best expected outcome?"
+
+That's a much stronger story.
+
+🔥 FEATURE 4 — "Why Not?" Engine
+
+This is a very nice differentiator.
+
+Most recommendation systems explain:
+
+Why I selected Product A
+
+Our system should also explain:
+
+Why I rejected Product B.
+
+Example:
+
+Product A — SELECTED
+
+✅ Meets all mandatory constraints
+✅ Delivery in 5 days
+✅ Seller reliability 94%
+✅ Lowest risk
+✅ Within authorization
+
+Product B — REJECTED
+
+❌ Delivery exceeds limit by 3 days
+
+Product C — REJECTED
+
+❌ ₹4,200 above authorized budget
+
+Product D — REJECTED
+
+❌ Seller reliability below threshold
+
+This creates transparent decision-making, which fits directly with the organizers' emphasis on explaining why the agent chose what it chose.
+
+🔥 FEATURE 5 — Dynamic Negotiation Agent
+
+The PS explicitly asks us to simulate negotiation/vendor confirmation.
+
+Instead of treating this as:
+
+"Agent sends a message."
+
+We can make it policy-driven.
+
+Example:
+
+Vendor price: ₹48,000
+User budget: ₹45,000
+
+Agent calculates:
+
+Maximum negotiation tolerance = ₹46,000
+
+Then:
+
+Agent → Vendor
+
+Requesting bulk pricing for 10 units. Can you offer ₹45,500/unit?
+
+Vendor:
+
+₹45,800 final.
+
+Agent:
+
+Within negotiation tolerance → ACCEPT.
+
+But if vendor responds:
+
+₹47,500.
+
+Agent:
+
+Exceeds authorized threshold → ESCALATE TO HUMAN
+
+That's autonomous negotiation within boundaries.
+
+🔥 FEATURE 6 — Authorization Firewall
+
+This could be another major differentiator.
+
+Instead of making authorization just a checkbox, create an explicit:
+
+Procurement Policy Engine
+
+Example policy:
+
+Maximum purchase:
+₹5,00,000
+
+Per-item limit:
+₹50,000
+
+Allowed categories:
+Electronics
+Office Equipment
+
+Auto-approval:
+≤ ₹2,00,000
+
+Human approval:
+₹2,00,001 – ₹5,00,000
+
+Forbidden:
+Anything above ₹5,00,000
+
+Then every action goes through:
+
+Agent Decision
+
+↓
+
+Authorization Firewall
+
+↓
+
+ALLOW / ESCALATE / BLOCK
+
+This makes our "human-in-the-loop" architecture much stronger.
+
+🔥 FEATURE 7 — Human Approval as a Decision Packet
+
+Instead of simply:
+
+"Please approve."
+
+We give the human a decision packet.
+
+⚠️ APPROVAL REQUIRED
+
+Purchase: 10 × Dell Laptop
+Total: ₹4,58,000
+Authorized: ₹4,50,000
+Variance: +₹8,000
+
+Why exception occurred:
+
+No vendor satisfies all constraints within ₹4,50,000.
+
+Best alternatives:
+
+Option	Cost	Delivery	Risk
+A	₹4.58L	5 days	Low
+B	₹4.42L	10 days	Medium
+C	₹4.35L	8 days	High
+
+Agent recommendation: A
+
+[Approve] [Reject] [Modify]
+
+Now human oversight becomes meaningful, rather than decorative.
+
+🔥 FEATURE 8 — Counterfactual Decision Engine
+
+This one could really make the judges pause.
+
+After choosing a product, our system can answer:
+
+"What would have happened if the budget were ₹5,000 lower?"
+
+or:
+
+"What if delivery had to be within 3 days?"
+
+or:
+
+"What if seller reliability mattered more than price?"
+
+Example:
+
+Current decision → Vendor A
+
+Change:
+
+Delivery constraint: 7 days → 3 days
+
+Result:
+
+Vendor A becomes invalid.
+Vendor C becomes optimal.
+
+This demonstrates that the system isn't merely generating a static recommendation.
+
+It's actually reasoning over the decision space.
+
+🔥 FEATURE 9 — Procurement What-If Simulator
+
+This can become a dashboard feature.
+
+Human can change:
+
+Budget
+₹45,000 → ₹50,000
+
+Delivery
+7 days → 3 days
+
+Risk tolerance
+Medium → Low
+
+Then the agent recomputes:
+
+Best vendor
+Total cost
+Risk
+Trade-offs
+
+This gives the human decision control without manually restarting the procurement process.
+
+🔥 FEATURE 10 — Multi-Source Data Normalization
+
+Different vendors may describe the same thing differently.
+
+Example:
+
+Vendor A
+
+RAM: 16 GB DDR5
+
+Vendor B
+
+Memory: 16384 MB
+
+Vendor C
+
+16GB RAM
+
+Our system normalizes them into:
+
+RAM = 16 GB
+
+Likewise:
+
+₹45,999 → numerical price
+"Ships in 5–7 business days" → delivery estimate
+"4.6/5 from 2,100 buyers" → reliability signal
+
+This makes the comparison engine much more credible.
+
+🔥 FEATURE 11 — Evidence-Grounded Decisions
+
+Every important decision should have an evidence reference.
+
+Instead of:
+
+Vendor reliability = 92%
+
+we should be able to show:
+
+Reliability score derived from:
+
+Seller rating
+Number of reviews
+Return history
+Availability history
+
+So the agent isn't hallucinating procurement facts.
+
+This is especially important because an autonomous system making purchases cannot simply trust an LLM's generated answer.
+
+🔥 FEATURE 12 — Confidence-Aware Autonomy
+
+This is one of my favorites.
+
+The agent should know when it isn't confident enough to act.
+
+For example:
+
+Confidence: 96%
+
+All constraints clearly satisfied.
+
+→ AUTO EXECUTE
+
+Confidence: 73%
+
+Some vendor information uncertain.
+
+→ REVIEW
+
+Confidence: 41%
+
+Critical information missing.
+
+→ ASK HUMAN
+
+So autonomy isn't binary.
+
+It's:
+
+Confidence + Risk + Authorization → Action
+
+That's a very strong AI-agent design principle.
+
+🔥 FEATURE 13 — Failure Recovery
+
+The PS explicitly requires handling:
+
+No vendor satisfies all constraints
+Top vendor unavailable
+
+But we can expand this.
+
+Scenario A
+
+Top vendor disappears
+
+↓
+
+Re-run availability
+
+↓
+
+Select next-ranked compliant vendor
+
+↓
+
+Recalculate risk
+
+↓
+
+Continue
+
+Scenario B
+
+No vendor meets every requirement
+
+Instead of simply saying:
+
+"No results."
+
+The agent produces:
+
+Constraint Relaxation Analysis
+No exact match found.
+
+To find a valid option:
+
+Relax delivery:
+7 days → 9 days
+
+OR
+
+Increase budget:
+₹45,000 → ₹47,500
+
+OR
+
+Reduce SSD requirement:
+512GB → 256GB
+
+Then asks:
+
+Which constraint may I relax?
+
+That's much more intelligent.
+
+🔥 FEATURE 14 — Constraint Dependency Graph
+
+This is something I think we can use in our architecture.
+
+For every procurement request:
+
+                 Buying Goal
+                     │
+          ┌──────────┼──────────┐
+          ↓          ↓          ↓
+       Budget      Specs     Delivery
+          │          │          │
+          └──────────┼──────────┘
+                     ↓
+             Vendor Selection
+                     ↓
+               Risk Analysis
+                     ↓
+              Authorization
+
+But internally we can represent relationships between constraints.
+
+For example:
+
+Lower budget → fewer compliant vendors
+
+Faster delivery → higher cost
+
+Higher reliability → potentially higher price
+
+This lets us explain trade-offs.
+
+🔥 FEATURE 15 — Procurement Memory
+
+Imagine Ravi repeatedly buys laptops.
+
+The system remembers:
+
+Ravi usually prefers Lenovo
+Budget tolerance = ±5%
+Minimum seller reliability = 85%
+Preferred delivery = ≤7 days
+
+Next procurement:
+
+"Get 10 laptops for new employees."
+
+The system already knows his preferences.
+
+But importantly:
+
+Memory ≠ Authorization
+
+Previous behavior should never override current policy.
+
+That distinction could be another innovation point.
+
+🧩 Putting everything together
+
+Now we're getting something much bigger than a basic procurement chatbot.
+
+Our architecture could look conceptually like:
+
+                   USER
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │ Intent & Constraint │
+          │     Interpreter     │
+          └──────────┬──────────┘
+                     │
+                     ▼
+          ┌─────────────────────┐
+          │ Constraint Engine   │
+          │ Hard / Soft / Ambig │
+          └──────────┬──────────┘
+                     │
+                     ▼
+        ┌─────────────────────────┐
+        │ Multi-Source Discovery  │
+        └────────────┬────────────┘
+                     │
+                     ▼
+        ┌─────────────────────────┐
+        │ Data Normalization      │
+        └────────────┬────────────┘
+                     │
+                     ▼
+        ┌─────────────────────────┐
+        │ Decision Engine         │
+        │ Score + Risk + Evidence │
+        └────────────┬────────────┘
+                     │
+              ┌──────┴──────┐
+              ▼             ▼
+         NEGOTIATE       APPROVAL?
+              │             │
+              └──────┬──────┘
+                     ▼
+          ┌─────────────────────┐
+          │ Authorization       │
+          │ Firewall            │
+          └──────────┬──────────┘
+                     │
+             ┌───────┴────────┐
+             ▼                ▼
+           ALLOW            ESCALATE
+             │                │
+             ▼                ▼
+       MOCK PURCHASE     HUMAN DECISION
+             │                │
+             └───────┬────────┘
+                     ▼
+          ┌─────────────────────┐
+          │ Audit + Explanation │
+          └─────────────────────┘
+🏆 But bro, there's an important strategic point
+
+We should NOT put all 15 features into the PPT.
+
+That would make the solution look bloated.
+
+Instead, we should identify 3–5 signature innovations and make them extremely strong.
+
+My current shortlist would be:
+
+🥇 Constraint Intelligence Engine
+
+Hard/soft/ambiguous constraints + constraint relaxation.
+
+🥈 Risk-Aware Decision Engine
+
+Price isn't the only factor → reliability + delivery + return + risk.
+
+🥉 Authorization Firewall
+
+Agent autonomy bounded by explicit policies.
+
+4️⃣ Confidence-Aware Human Escalation
+
+Agent knows when it should stop and ask.
+
+5️⃣ Explainable Procurement Ledger
+
+Every search → comparison → rejection → decision → action is traceable.
+
+And Counterfactual/What-if simulation can be our "wow" feature if we can explain it cleanly.
+
+🎯 The story we should sell to the judges
+
+Not:
+
+"We built an AI that purchases products."
+
+Instead:
+
+"We built an AI that knows what it can buy, why it should buy it, when it should negotiate, when it must stop, and how to prove every decision it made."
