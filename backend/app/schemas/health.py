@@ -3,6 +3,7 @@ from pydantic import BaseModel
 
 class HealthResponse(BaseModel):
     status: str
+    mode: str = "live" # "live" (Supabase/PostgreSQL) or "offline" (SQLite)
     api: str
     database: str
     database_type: str

@@ -51,6 +51,8 @@ procura.db
 # Editor & OS
 .vscode/
 .idea/
+.claude/
+.windsurf/
 *.suo
 *.ntvs*
 *.njsproj
@@ -58,3 +60,5 @@ procura.db
 *.sw?
 .DS_Store
 Thumbs.db
+
+/src/generated/prisma

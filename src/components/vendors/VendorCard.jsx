@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ShieldCheck, Truck, Award, AlertTriangle, ChevronDown, CheckCircle2, XCircle } from 'lucide-react';
+import { ShieldCheck, Truck, Award, AlertTriangle, ChevronDown, CheckCircle2, XCircle, Sparkles } from 'lucide-react';
 import { RiskBadge } from '../common/RiskBadge';
 import { AnimatedCounter } from '../common/AnimatedCounter';
 
@@ -17,17 +17,25 @@ export function VendorCard({ vendor }) {
 
   return (
     <motion.div
-      whileHover={{ y: -2 }}
-      transition={{ duration: 0.18 }}
-      className={`rounded-2xl bg-surface border transition-all duration-200 overflow-hidden ${
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.2 }}
+      className={`rounded-2xl bg-surface border transition-all duration-300 overflow-hidden relative ${
         vendor.isRecommended
-          ? 'border-primary/60 shadow-glow-primary'
-          : 'border-border hover:border-border-glow'
+          ? 'border-2 border-primary shadow-glow-primary ring-1 ring-primary/40'
+          : 'border-border hover:border-border-glow hover:shadow-card'
       }`}
     >
-      {/* Recommended top stripe */}
+      {/* Recommended Top Spotlight Ribbon */}
       {vendor.isRecommended && (
-        <div className="h-0.5 bg-gradient-to-r from-primary via-success to-primary" />
+        <div className="bg-gradient-to-r from-primary via-success to-primary px-4 py-1 flex items-center justify-between text-bg font-mono font-bold text-xs">
+          <div className="flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5" />
+            <span>AI RECOMMENDED VENDOR — OPTIMAL PROCUREMENT MATCH</span>
+          </div>
+          <span className="bg-bg text-primary px-2 py-0.2 rounded text-[10px] font-extrabold">
+            93.5% CONFIDENCE
+          </span>
+        </div>
       )}
 
       {/* Header */}
@@ -36,31 +44,40 @@ export function VendorCard({ vendor }) {
           <div className="flex flex-wrap items-center gap-2">
             <h3 className="text-lg font-bold text-text-primary tracking-tight font-mono">{vendor.name}</h3>
             {vendor.isRecommended && (
-              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-primary text-white shadow-glow-primary">
-                ⭐ BEST OUTCOME
+              <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-primary/20 text-primary border border-primary/40">
+                ⭐ BEST SCORE (93.5)
               </span>
             )}
             {!vendor.isRecommended && vendor.overallRisk === 'High' && (
               <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-danger/20 text-danger border border-danger/30">
-                REJECTED
+                DISQUALIFIED
               </span>
             )}
           </div>
           <p className="text-xs text-text-secondary">{vendor.sellerRating}</p>
+          
+          <div className="flex flex-wrap items-center gap-2 pt-1">
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-bg border border-border text-text-muted">
+              📍 {vendor.region || "APAC Hub"}
+            </span>
+            <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-primary/10 border border-primary/25 text-primary">
+              📦 {vendor.source_channel || (vendor.isRecommended ? "Enterprise Direct Tier-1 Catalog" : "B2B Marketplace & OEM Aggregator")}
+            </span>
+          </div>
 
           {/* AI Confidence bar for recommended vendor */}
           {vendor.isRecommended && (
             <div className="pt-2 space-y-1">
               <div className="flex justify-between items-center text-[11px] font-mono">
-                <span className="text-text-muted">AI Decision Confidence</span>
-                <span className="text-primary font-bold">94%</span>
+                <span className="text-text-muted">Multi-Objective Score</span>
+                <span className="text-primary font-bold">93.5 / 100 Optimal</span>
               </div>
-              <div className="w-40 h-1.5 rounded-full bg-bg overflow-hidden">
+              <div className="w-48 h-2 rounded-full bg-bg overflow-hidden relative">
                 <motion.div
-                  className="h-full bg-gradient-to-r from-primary to-success"
+                  className="h-full bg-gradient-to-r from-primary via-success to-primary rounded-full"
                   initial={{ width: 0 }}
-                  animate={{ width: '94%' }}
-                  transition={{ duration: 1, ease: 'easeOut', delay: 0.3 }}
+                  animate={{ width: '93.5%' }}
+                  transition={{ duration: 1.1, ease: 'easeOut', delay: 0.2 }}
                 />
               </div>
             </div>
@@ -83,7 +100,7 @@ export function VendorCard({ vendor }) {
         <div className="flex items-center gap-2 p-2.5 rounded-xl bg-bg border border-border">
           <Truck className="w-4 h-4 text-primary shrink-0" />
           <div>
-            <div className="text-[10px] text-text-muted font-mono">Delivery</div>
+            <div className="text-[10px] text-text-muted font-mono">Delivery Lead</div>
             <div className="text-xs font-semibold font-mono text-text-primary">{vendor.deliveryDisplay}</div>
           </div>
         </div>
@@ -106,7 +123,7 @@ export function VendorCard({ vendor }) {
         <div className="flex items-center gap-2 p-2.5 rounded-xl bg-bg border border-border">
           <AlertTriangle className="w-4 h-4 text-text-secondary shrink-0" />
           <div>
-            <div className="text-[10px] text-text-muted font-mono">Stock</div>
+            <div className="text-[10px] text-text-muted font-mono">Stock Level</div>
             <div className="text-xs font-semibold font-mono text-text-primary">{vendor.stockAvailable} Units</div>
           </div>
         </div>
@@ -116,15 +133,15 @@ export function VendorCard({ vendor }) {
       <div className="px-5 py-3 border-t border-border/40 flex items-center justify-between">
         <div className="text-xs font-mono">
           {vendor.isRecommended ? (
-            <span className="text-success flex items-center gap-1">
-              <CheckCircle2 className="w-3.5 h-3.5" /> Multi-Objective Optimisation
+            <span className="text-success flex items-center gap-1 font-semibold">
+              <CheckCircle2 className="w-3.5 h-3.5" /> Selected by Multi-Objective Algorithm
             </span>
           ) : vendor.overallRisk === 'High' ? (
-            <span className="text-danger flex items-center gap-1">
-              <XCircle className="w-3.5 h-3.5" /> Eliminated by Risk Engine
+            <span className="text-danger flex items-center gap-1 font-semibold">
+              <XCircle className="w-3.5 h-3.5" /> Disqualified by Risk Engine
             </span>
           ) : (
-            <span className="text-text-muted">Compliant — ranked lower</span>
+            <span className="text-text-muted">Compliant alternative — higher unit cost</span>
           )}
         </div>
 
@@ -157,7 +174,7 @@ export function VendorCard({ vendor }) {
                   Normalized Hardware Specs (Post Data-Normalization Engine)
                 </h4>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-2 font-mono text-xs">
-                  {Object.entries(vendor.normalizedSpecs).map(([key, val]) => (
+                  {Object.entries(vendor.normalizedSpecs || {}).map(([key, val]) => (
                     <div key={key} className="p-2 rounded-lg bg-surface border border-border">
                       <span className="text-text-muted text-[10px] block uppercase">{key}</span>
                       <span className="text-text-primary font-medium text-[11px]">{val}</span>
@@ -172,9 +189,9 @@ export function VendorCard({ vendor }) {
                   5-Dimension Risk Decomposition
                 </h4>
                 <div className="space-y-2">
-                  {Object.entries(vendor.riskBreakdown).map(([dim, data]) => (
+                  {Object.entries(vendor.riskBreakdown || {}).map(([dim, data]) => (
                     <div key={dim} className="flex items-start gap-3 p-2.5 rounded-lg bg-surface border border-border text-xs font-mono">
-                      <div className="w-20 shrink-0 text-text-muted text-[10px] pt-0.5 capitalize">
+                      <div className="w-24 shrink-0 text-text-muted text-[10px] pt-0.5 capitalize">
                         {dim.replace('Risk', ' Risk').trim()}
                       </div>
                       <div className="flex-1 min-w-0">

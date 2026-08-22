@@ -2,7 +2,7 @@ import uuid
 import json
 import hashlib
 from datetime import datetime
-from sqlalchemy import Column, String, DateTime, ForeignKey, JSON, Text
+from sqlalchemy import Column, String, Integer, DateTime, ForeignKey, JSON, Text
 from sqlalchemy.orm import relationship
 from app.db.database import Base
 
@@ -20,6 +20,7 @@ class AuditEvent(Base):
     metadata_json = Column(JSON, default=dict)
     
     # Genuine SHA-256 Hash Chain
+    sequence_order = Column(Integer, default=1, index=True)
     previous_event_hash = Column(String(64), nullable=True)
     event_hash = Column(String(64), nullable=False)
     

@@ -21,6 +21,9 @@ class Vendor(Base):
     risk_level = Column(String(20), default="Low") # Low, Medium, High
     risk_score = Column(Float, default=14.0) # 0-100 (lower is better)
     stock_available = Column(Integer, default=50)
+    region = Column(String(100), default="Asia-Pacific (APAC)")
+    source_channel = Column(String(100), default="Enterprise Direct Tier-1 Catalog") # Enterprise Direct vs B2B Marketplace
+    preferred_supplier = Column(Boolean, default=False)
     is_active = Column(Boolean, default=True)
     normalized_specs = Column(JSON, default=dict)
     risk_breakdown = Column(JSON, default=dict)

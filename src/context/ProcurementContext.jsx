@@ -107,6 +107,11 @@ export function ProcurementProvider({ children }) {
             setLivePolicyChecks(response.policy_checks);
             setLiveDecision(response.decision);
             setLiveAuditEvents(response.audit_events);
+            if (response.purchase_order) {
+              setLivePurchaseOrder(response.purchase_order);
+              setGeneratedPoNumber(response.purchase_order.po_number);
+              setPoStatus('issued');
+            }
             if (response.reasoning_steps?.length > 0) {
               setReasoningSteps(response.reasoning_steps);
             }
@@ -128,6 +133,8 @@ export function ProcurementProvider({ children }) {
       setDemoMode(true);
     }
   }, []);
+
+  const checkHealth = checkHealthAndRehydrate;
 
   useEffect(() => {
     checkHealthAndRehydrate();

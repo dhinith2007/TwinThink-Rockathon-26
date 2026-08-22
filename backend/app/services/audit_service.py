@@ -32,11 +32,12 @@ class AuditService:
         latest_event = (
             db.query(AuditEvent)
             .filter(AuditEvent.request_id == request_id)
-            .order_by(AuditEvent.timestamp.desc())
+            .order_by(AuditEvent.sequence_order.desc(), AuditEvent.timestamp.desc())
             .first()
         )
 
         previous_hash = latest_event.event_hash if latest_event else "GENESIS"
+        sequence_order = (latest_event.sequence_order + 1) if (latest_event and latest_event.sequence_order is not None) else 1
         timestamp_str = timestamp.isoformat()
 
         # Compute genuine SHA-256 hash
@@ -53,6 +54,7 @@ class AuditService:
 
         audit_entry = AuditEvent(
             request_id=request_id,
+            sequence_order=sequence_order,
             event_type=event_type,
             event_title=event_title,
             stage=stage,
@@ -74,7 +76,7 @@ class AuditService:
         return (
             db.query(AuditEvent)
             .filter(AuditEvent.request_id == request_id)
-            .order_by(AuditEvent.timestamp.asc())
+            .order_by(AuditEvent.sequence_order.asc(), AuditEvent.timestamp.asc())
             .all()
         )
 

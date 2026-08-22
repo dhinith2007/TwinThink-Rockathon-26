@@ -12,8 +12,8 @@ class PolicyRule(Base):
     category = Column(String(100), nullable=False) # Financial, Quality, Category, Boundary
     rule_description = Column(String(500), nullable=False)
     policy_type = Column(String(50), nullable=False) # BUDGET_THRESHOLD, VENDOR_RELIABILITY, APPROVED_CATEGORY, ITEM_BUDGET_CAP, NEGOTIATION_TOLERANCE
-    threshold_value = Column(String(100), nullable=False)
-    operator = Column(String(20), nullable=False) # LTE, GTE, EQ, IN_LIST
+    threshold_value = Column(String(500), nullable=False)
+    operator = Column(String(50), nullable=False) # LTE, GTE, EQ, IN_LIST
     impact = Column(String(200), nullable=True)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)

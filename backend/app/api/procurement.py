@@ -7,7 +7,10 @@ from app.schemas.procurement import (
     ProcurementResponse,
     SimulateRelaxationRequest,
     SimulateRelaxationResponse,
-    AuditEventDTO
+    AuditEventDTO,
+    BatchProcurementRequest,
+    BatchProcurementResponse,
+    NegotiationResponse
 )
 from app.services.procurement_service import procurement_service
 from app.services.audit_service import audit_service
@@ -17,8 +20,8 @@ router = APIRouter(prefix="/procurement", tags=["Procurement"])
 @router.post("/analyze", response_model=ProcurementResponse)
 async def analyze_procurement(req: ProcurementAnalyzeRequest, db: Session = Depends(get_db)):
     """
-    Submits a natural language procurement intent, extracts constraints, evaluates suppliers,
-    runs policy firewall rules, and creates an audit-logged decision packet.
+    Submits a natural language procurement intent, extracts constraints with hybrid AI,
+    evaluates multi-source suppliers, runs policy firewall rules, and creates an audit-logged decision packet.
     """
     try:
         return await procurement_service.analyze_procurement(db, req)
@@ -26,6 +29,33 @@ async def analyze_procurement(req: ProcurementAnalyzeRequest, db: Session = Depe
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Procurement analysis error: {str(e)}"
+        )
+
+@router.post("/batch", response_model=BatchProcurementResponse)
+async def analyze_batch_procurement(batch_req: BatchProcurementRequest, db: Session = Depends(get_db)):
+    """
+    Executes multi-brief procurement batch (Ravi Scenario).
+    Processes multiple requisition briefs (e.g. Laptops, Chairs, Monitors) across enterprise suppliers.
+    """
+    try:
+        return await procurement_service.analyze_batch_procurement(db, batch_req)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Batch procurement error: {str(e)}"
+        )
+
+@router.post("/{request_id}/negotiate", response_model=NegotiationResponse)
+async def negotiate_procurement(request_id: str, db: Session = Depends(get_db)):
+    """
+    Simulates real-time commercial negotiation and warranty/price confirmation between ProcuraAI and selected supplier.
+    """
+    try:
+        return await procurement_service.negotiate_procurement(db, request_id)
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Negotiation simulation error: {str(e)}"
         )
 
 @router.get("/{request_id}", response_model=ProcurementResponse)

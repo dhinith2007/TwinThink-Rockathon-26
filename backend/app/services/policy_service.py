@@ -103,4 +103,40 @@ class PolicyService:
 
         return overall_status, checks, escalation_reason
 
+    def evaluate_firewall(
+        self,
+        db,
+        total_amount: float,
+        unit_price: float,
+        vendor: Vendor,
+        category: str,
+        target_budget: float
+    ) -> Dict[str, Any]:
+        """Convenience wrapper to evaluate active DB policies."""
+        from app.models.policy import PolicyRule
+        policies = db.query(PolicyRule).filter(PolicyRule.is_active == True).all()
+        qty = int(total_amount / unit_price) if unit_price > 0 else 1
+        status, checks, reason = self.evaluate_policies(
+            policies=policies,
+            vendor=vendor,
+            quantity=qty,
+            unit_price=unit_price,
+            target_budget_per_unit=target_budget
+        )
+        return {
+            "authorization_status": status,
+            "checks": [
+                {
+                    "policy_code": c.policy_code,
+                    "title": c.title,
+                    "category": c.category,
+                    "status": c.status,
+                    "details": c.details,
+                    "impact": c.impact
+                }
+                for c in checks
+            ],
+            "escalation_reason": reason
+        }
+
 policy_service = PolicyService()

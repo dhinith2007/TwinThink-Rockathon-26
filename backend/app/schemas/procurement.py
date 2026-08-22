@@ -45,11 +45,13 @@ class VendorDTO(BaseModel):
     seller_rating: Optional[str] = None
     warranty: str
     stock_available: int
+    region: Optional[str] = "APAC"
+    source_channel: Optional[str] = "Enterprise Direct Tier-1 Catalog"
     overall_risk: str
     risk_score_num: float
     is_recommended: bool = False
     rank: int
-    normalized_specs: Dict[str, str] = {}
+    normalized_specs: Dict[str, Any] = {}
     risk_breakdown: Dict[str, RiskBreakdownItem] = {}
     why_selected: Optional[List[str]] = None
     why_not_rejected: Optional[List[str]] = None
@@ -112,6 +114,9 @@ class ProcurementResponse(BaseModel):
     policy_checks: List[PolicyCheckDTO]
     reasoning_steps: List[str]
     audit_events: List[AuditEventDTO]
+    purchase_order: Optional[Dict[str, Any]] = None
+    sourcing_summary: Optional[Dict[str, Any]] = None
+    ai_funnel: Optional[Dict[str, Any]] = None
 
 class SimulateRelaxationRequest(BaseModel):
     delivery_days: int = Field(..., ge=1, le=30)
@@ -124,3 +129,53 @@ class SimulateRelaxationResponse(BaseModel):
     flexibility_score: int
     sla_assessment: str
     updated_vendors: List[VendorDTO]
+
+class BatchBriefItem(BaseModel):
+    raw_request: str
+    item_name: Optional[str] = None
+    category: Optional[str] = None
+    quantity: Optional[int] = 1
+    budget_per_unit: Optional[float] = None
+    delivery_days: Optional[int] = 7
+    priority: Optional[str] = "Medium"
+
+class BatchProcurementRequest(BaseModel):
+    session_id: Optional[str] = None
+    batch_title: Optional[str] = "Multi-Item Enterprise Procurement Batch"
+    requests: List[BatchBriefItem]
+
+class BatchItemSummary(BaseModel):
+    request_id: str
+    title: str
+    item_name: str
+    category: str
+    quantity: int
+    total_budget: float
+    total_cost: float
+    savings: float
+    status: str
+    authorization_status: str # ALLOW, ESCALATE, BLOCK
+    recommended_vendor: str
+    po_number: Optional[str] = None
+
+class BatchProcurementResponse(BaseModel):
+    batch_id: str
+    session_id: str
+    batch_title: str
+    total_requests: int
+    total_spend: float
+    total_savings: float
+    completed_count: int
+    escalated_count: int
+    overall_status: str
+    items: List[BatchItemSummary]
+    audit_summary: str
+
+class NegotiationResponse(BaseModel):
+    request_id: str
+    vendor_name: str
+    dialogue: List[Dict[str, Any]]
+    concession_achieved: str
+    savings_amount: float
+    confirmed_terms: Dict[str, Any]
+    status: str

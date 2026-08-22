@@ -6,6 +6,7 @@ from app.models.decision import Decision
 from app.models.approval import Approval
 from app.models.purchase_order import PurchaseOrder
 from app.models.audit import AuditEvent
+from app.models.knowledge_base import Product, VendorOffer
 
 __all__ = [
     "Base",
@@ -17,5 +18,7 @@ __all__ = [
     "Decision",
     "Approval",
     "PurchaseOrder",
-    "AuditEvent"
+    "AuditEvent",
+    "Product",
+    "VendorOffer"
 ]

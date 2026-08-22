@@ -50,38 +50,49 @@ export function NewRequest() {
         priority: "High",
         additionalRequirements: "Minimum 512GB NVMe SSD required. Prefer Dell or Lenovo enterprise series with onsite warranty."
       });
-    } else if (presetType === 'monitors') {
-      setFormData({
-        naturalPrompt: "Procure 15 LG 27-inch 4K color-calibrated displays under ₹28,000 each within 5 days for UI team.",
-        itemName: "15 × LG 27-inch 4K UHD Monitors",
-        quantity: 15,
-        unitBudget: 28000,
-        totalBudget: 420000,
-        deliveryDeadlineDays: 5,
-        priority: "High",
-        additionalRequirements: "USB-C Power Delivery, 99% sRGB coverage, height-adjustable stand."
-      });
     } else if (presetType === 'chairs') {
       setFormData({
-        naturalPrompt: "Order 25 ErgoPro Executive mesh chairs with lumbar support under ₹12,000 each within 10 days.",
-        itemName: "25 × ErgoPro Executive Mesh Chairs",
-        quantity: 25,
-        unitBudget: 12000,
-        totalBudget: 300000,
-        deliveryDeadlineDays: 10,
+        naturalPrompt: "Procure 8 ergonomic office chairs with lumbar support under ₹8,000 each with 5-day delivery.",
+        itemName: "8 × ErgoPro Executive Mesh Chairs",
+        quantity: 8,
+        unitBudget: 8000,
+        totalBudget: 64000,
+        deliveryDeadlineDays: 5,
         priority: "Medium",
-        additionalRequirements: "Mesh back, 3D adjustable armrests, 3-year commercial warranty."
+        additionalRequirements: "BIFMA Level 3 certified mesh back, 3D adjustable armrests, 3-year commercial warranty."
       });
-    } else if (presetType === 'keyboards') {
+    } else if (presetType === 'monitors') {
       setFormData({
-        naturalPrompt: "Procure 40 Logitech MX Keys wireless keyboards under ₹4,500 each for open workspace within 14 days.",
-        itemName: "40 × Logitech MX Keys Keyboards",
-        quantity: 40,
-        unitBudget: 4500,
-        totalBudget: 180000,
-        deliveryDeadlineDays: 14,
+        naturalPrompt: "Buy 8 27-inch 4K UHD color-calibrated displays under ₹28,000 each within 5 days for engineering team.",
+        itemName: "8 × LG 27-inch 4K UHD Monitors",
+        quantity: 8,
+        unitBudget: 28000,
+        totalBudget: 224000,
+        deliveryDeadlineDays: 5,
+        priority: "High",
+        additionalRequirements: "USB-C Power Delivery (≥ 65W), 99% sRGB coverage, height-adjustable pivot stand."
+      });
+    } else if (presetType === 'servers') {
+      setFormData({
+        naturalPrompt: "Buy 2 enterprise 1U rack servers with 128GB ECC RAM under ₹3,00,000 each within 10 days.",
+        itemName: "2 × Dell PowerEdge R660xs Rack Servers",
+        quantity: 2,
+        unitBudget: 300000,
+        totalBudget: 600000,
+        deliveryDeadlineDays: 10,
+        priority: "High",
+        additionalRequirements: "Dual Intel Xeon, 128GB DDR5 ECC RAM, RAID 1 NVMe Mirror + 4x SAS, 24x7 4hr Mission Critical Support."
+      });
+    } else if (presetType === 'stands') {
+      setFormData({
+        naturalPrompt: "Order 30 aluminum ergonomic laptop risers under ₹2,500 each within 3 days.",
+        itemName: "30 × DeskPro Aluminum Laptop Stands",
+        quantity: 30,
+        unitBudget: 2500,
+        totalBudget: 75000,
+        deliveryDeadlineDays: 3,
         priority: "Low",
-        additionalRequirements: "Dual Bluetooth + Logi Bolt USB, tactile quiet switches."
+        additionalRequirements: "Aircraft-grade CNC aluminum, ventilated cooling cutouts, silicone non-slip pads."
       });
     }
   };
@@ -124,24 +135,24 @@ export function NewRequest() {
           </button>
           <button
             type="button"
-            onClick={() => handlePreFill('monitors')}
-            className="px-3 py-1.5 rounded-xl bg-bg border border-border text-text-secondary text-xs font-mono font-medium hover:text-text-primary transition-colors flex items-center gap-1.5 cursor-pointer"
-          >
-            <Monitor className="w-3.5 h-3.5" /> 15 Monitors (₹28k)
-          </button>
-          <button
-            type="button"
             onClick={() => handlePreFill('chairs')}
             className="px-3 py-1.5 rounded-xl bg-bg border border-border text-text-secondary text-xs font-mono font-medium hover:text-text-primary transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <Armchair className="w-3.5 h-3.5" /> 25 Chairs (₹12k)
+            <Armchair className="w-3.5 h-3.5" /> 8 Chairs (₹8k)
           </button>
           <button
             type="button"
-            onClick={() => handlePreFill('keyboards')}
+            onClick={() => handlePreFill('monitors')}
             className="px-3 py-1.5 rounded-xl bg-bg border border-border text-text-secondary text-xs font-mono font-medium hover:text-text-primary transition-colors flex items-center gap-1.5 cursor-pointer"
           >
-            <Keyboard className="w-3.5 h-3.5" /> 40 Keyboards (₹4.5k)
+            <Monitor className="w-3.5 h-3.5" /> 8 Monitors (₹28k)
+          </button>
+          <button
+            type="button"
+            onClick={() => handlePreFill('servers')}
+            className="px-3 py-1.5 rounded-xl bg-bg border border-border text-text-secondary text-xs font-mono font-medium hover:text-text-primary transition-colors flex items-center gap-1.5 cursor-pointer"
+          >
+            <Zap className="w-3.5 h-3.5" /> 2 Rack Servers (₹3L)
           </button>
         </div>
       </div>
